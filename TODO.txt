@@ -1,0 +1,1 @@
+Do i want a class for the squares on the board?
