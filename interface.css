@@ -20,7 +20,7 @@ html, body {
     box-sizing: border-box;
 }
 
-td 
+td
 {
     border-width: 5px;
     width: 70px;
@@ -38,6 +38,16 @@ td
 .WhiteSquare
 {
     background-color: lightgrey;
+}
+
+.Selected
+{
+    background-color: red;
+}
+
+.ValidMove
+{
+    background-color: Green;
 }
 
 #banner{

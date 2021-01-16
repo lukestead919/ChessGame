@@ -6,9 +6,8 @@ var playerBlack = new Player("Andreea", Player.COLOUR_BLACK)
 
 var game = new Game(playerWhite, playerBlack);
 
-display.buildDisplay(game.board.size)
-display.refreshForBoard(game.board)
-
+display.buildDisplay(game.board)
+refreshDisplay()
 
 
 
@@ -30,5 +29,11 @@ function toggleNightMode() {
 
 function squareClicked(x, y)
 {
-    throw new Error(x+y)
+    game.squareClicked(x, y)
+    refreshDisplay()
+}
+
+function refreshDisplay()
+{
+    display.refreshForBoard(game.board)
 }
