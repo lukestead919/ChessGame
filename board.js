@@ -150,11 +150,20 @@ class Board {
         }
     }
 
-    getSquareIfOccupiedByAnotherPlayersPiece(currentPlayer, x, y) {
+    getSquareIfEnemyPiece(currentPlayer, x, y) {
         if (this.getSquareAtPosition(x, y) != null
             && this.getPieceAtPosition(x, y) != null
             && this.getPieceAtPosition(x,y).player != currentPlayer) {
             return this.getSquareAtPosition(x, y)
         }
+    }
+
+    getSquareIfUnoccupiedOrEnemyPiece(currentPlayer, x, y) {
+        var square = this.getSquareIfUnoccupied(x, y)
+        if (square == null)
+        {
+            square = this.getSquareIfEnemyPiece(currentPlayer, x, y)
+        }
+        return square
     }
 }

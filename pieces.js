@@ -1,5 +1,14 @@
 class Piece
 {
+    static get DIRECTION_N()    {return 0}
+    static get DIRECTION_NE()   {return 1}
+    static get DIRECTION_E()    {return 2}
+    static get DIRECTION_SE()   {return 3}
+    static get DIRECTION_S()    {return 4}
+    static get DIRECTION_SW()   {return 5}
+    static get DIRECTION_W()    {return 6}
+    static get DIRECTION_NW()   {return 7}
+
     constructor(board, player, x, y)
     {
         this.player = player
@@ -48,9 +57,93 @@ class Piece
         return board.getSquareAtPosition(position[0], position[1])
     }
 
-    getValidMovesOrthogonal(board)
+    getValidMovesOrthogonal(board, x, y)
     {
+        var validMoves = new Array()
+        this.getValidMovesInDirection(validMoves, Piece.DIRECTION_N, board, x, y)
+        this.getValidMovesInDirection(validMoves, Piece.DIRECTION_E, board, x, y)
+        this.getValidMovesInDirection(validMoves, Piece.DIRECTION_S, board, x, y)
+        this.getValidMovesInDirection(validMoves, Piece.DIRECTION_W, board, x, y)
+        return validMoves
+    }
+    getValidMovesDiagonal(board, x, y)
+    {
+        var validMoves = new Array()
+        this.getValidMovesInDirection(validMoves, Piece.DIRECTION_NE, board, x, y)
+        this.getValidMovesInDirection(validMoves, Piece.DIRECTION_SE, board, x, y)
+        this.getValidMovesInDirection(validMoves, Piece.DIRECTION_SW, board, x, y)
+        this.getValidMovesInDirection(validMoves, Piece.DIRECTION_NW, board, x, y)
+        return validMoves
+    }
 
+    getValidMovesInDirection(validMoves, direction, board, x, y)
+    {
+        var distance = 0
+        while (true)
+        {
+            distance += 1
+            var square = this.getSquareAtPositionInDirection(board, x, y, direction, distance)
+            if (square == null)
+            {
+                return
+            }
+
+            const piece = square.piece
+            if (piece == null)
+            {
+                validMoves.push(square)
+            }
+            else
+            {
+                if ( (piece.player != this.player))
+                {
+                    validMoves.push(square)
+                }
+                return
+            }
+        }
+    }
+
+    getSquareAtPositionInDirection(board, x, y, direction, distance)
+    {
+        if (direction == Piece.DIRECTION_N)
+        {
+            y += distance
+        }
+        else if (direction == Piece.DIRECTION_NE)
+        {
+            x += distance
+            y += distance
+        }
+        else if (direction == Piece.DIRECTION_E)
+        {
+            x += distance
+        }
+        else if (direction == Piece.DIRECTION_SE)
+        {
+            x += distance
+            y -= distance
+        }
+        else if (direction == Piece.DIRECTION_S)
+        {
+            y -= distance
+        }
+        else if (direction == Piece.DIRECTION_SW)
+        {
+            x -= distance
+            y -= distance
+        }
+        else if (direction == Piece.DIRECTION_W)
+        {
+            x -= distance
+        }
+        else if (direction == Piece.DIRECTION_NW)
+        {
+            x -= distance
+            y += distance
+        }
+
+        return board.getSquareAtPosition(x, y)
     }
 }
 
@@ -72,8 +165,8 @@ class Pawn extends Piece
                 }
             }
 
-            retval.push(board.getSquareIfOccupiedByAnotherPlayersPiece(this.player, x-1, y+1))
-            retval.push(board.getSquareIfOccupiedByAnotherPlayersPiece(this.player, x+1, y+1))
+            retval.push(board.getSquareIfEnemyPiece(this.player, x-1, y+1))
+            retval.push(board.getSquareIfEnemyPiece(this.player, x+1, y+1))
 
         }
         else if (this.colour == Player.COLOUR_BLACK)
@@ -89,8 +182,8 @@ class Pawn extends Piece
                 }
             }
 
-            retval.push(board.getSquareIfOccupiedByAnotherPlayersPiece(this.player, x-1, y-1))
-            retval.push(board.getSquareIfOccupiedByAnotherPlayersPiece(this.player, x+1, y-1))
+            retval.push(board.getSquareIfEnemyPiece(this.player, x-1, y-1))
+            retval.push(board.getSquareIfEnemyPiece(this.player, x+1, y-1))
 
         }
 
@@ -100,5 +193,90 @@ class Pawn extends Piece
     getName()
     {
         return "Pawn"
+    }
+}
+
+class Rook extends Piece
+{
+    getValidMovesForLocation(board, x, y)
+    {
+        return this.getValidMovesOrthogonal(board, x, y)
+    }
+
+    getName()
+    {
+        return "Rook"
+    }
+}
+
+class Bishop extends Piece
+{
+    getValidMovesForLocation(board, x, y)
+    {
+        return this.getValidMovesDiagonal(board, x, y)
+    }
+
+    getName()
+    {
+        return "Bishop"
+    }
+}
+
+class Knight extends Piece
+{
+    getValidMovesForLocation(board, x, y)
+    {
+        var validMoves = new Array()
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x+2, y+1))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x+2, y-1))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x-2, y+1))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x-2, y-1))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x+1, y+2))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x-1, y+2))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x+1, y-2))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x-1, y-2))
+        return validMoves
+    }
+
+    getName()
+    {
+        return "Knight"
+    }
+}
+
+class Queen extends Piece
+{
+    getValidMovesForLocation(board, x, y)
+    {
+        var validMoves = this.getValidMovesDiagonal(board, x, y)
+        validMoves = validMoves.concat(this.getValidMovesOrthogonal(board, x, y))
+        return validMoves
+    }
+
+    getName()
+    {
+        return "Queen"
+    }
+}
+
+class King extends Piece
+{
+    getValidMovesForLocation(board, x, y)
+    {
+        var validMoves = new Array()
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x+1, y))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x+1, y+1))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x+1, y-1))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x, y+1))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x, y-1))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x-1, y))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x-1, y+1))
+        validMoves.push(board.getSquareIfUnoccupiedOrEnemyPiece(this.player, x-1, y-1))
+        return validMoves
+    }
+
+    getName()
+    {
+        return "King"
     }
 }
