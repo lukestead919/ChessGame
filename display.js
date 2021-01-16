@@ -50,12 +50,17 @@ class Display {
                     td.className = "BlackSquare"
                 }
 
-                if (board.selectedSquare == square) {
+                if (board.selectedPiece == square.piece
+                    && square.piece != null) {
                     td.classList.add("Selected")
                 }
 
                 if (square.validMove) {
                     td.classList.add("ValidMove")
+                }
+
+                if (square.inCheck) {
+                    td.classList.add("InCheck")
                 }
 
                 var piece = square.piece

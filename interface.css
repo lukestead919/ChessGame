@@ -47,7 +47,12 @@ td
 
 .ValidMove
 {
-    background-color: Green;
+    background-color: green;
+}
+
+.InCheck
+{
+    background-color: orange;
 }
 
 #banner{
