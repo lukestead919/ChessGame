@@ -10,6 +10,9 @@ class Display {
         boardDisplay.parentNode.replaceChild(newBoardDisplay, boardDisplay);
 
         this.buildEmptyBoard(board, newBoardDisplay)
+
+
+        this.buildMoveHistoryTable()
     }
 
     buildEmptyBoard(board, boardDisplay) {
@@ -76,6 +79,40 @@ class Display {
                 }
             }
         }
+    }
+
+    refreshForMoveHistory(moveHistory) {
+        if (moveHistory == null)
+        {
+            return
+        }
+        const moveHistoryTableOld = document.getElementById("MoveHistory")
+        var moveHistoryTable = moveHistoryTableOld.cloneNode(false);
+        moveHistoryTableOld.parentNode.replaceChild(moveHistoryTable, moveHistoryTableOld);
+        //This should be in order of the moves
+        var moveNumber = 0
+        var tr
+
+        moveHistory.forEach(move => {
+            if (move.piece.player.colour == Player.COLOUR_WHITE) {
+                moveNumber += 1
+                tr = document.createElement("tr")
+                moveHistoryTable.appendChild(tr)
+                const moveNumberCell = document.createElement("td");
+                moveNumberCell.innerHTML = moveNumber
+                tr.appendChild(moveNumberCell)
+            }
+
+            const moveCell = document.createElement("td");
+            moveCell.innerHTML = move.piece.getName() + " " + move.positionFrom + " to " + move.positionTo
+            tr.appendChild(moveCell)
+        });
+    }
+
+    buildMoveHistoryTable() {
+        var table = document.createElement("table")
+        table.id = "MoveHistory"
+        document.body.appendChild(table)
     }
 
     getIdForPosition(x, y) {

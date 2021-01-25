@@ -36,4 +36,5 @@ function squareClicked(x, y)
 function refreshDisplay()
 {
     display.refreshForBoard(game.board)
+    display.refreshForMoveHistory(game.moveHistory)
 }

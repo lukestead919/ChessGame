@@ -1,7 +1,5 @@
-class Game
-{
-    constructor(playerWhite, playerBlack)
-    {
+class Game {
+    constructor(playerWhite, playerBlack) {
         this.playerWhite = playerWhite
         this.playerBlack = playerBlack
         this.currentPlayer = playerWhite
@@ -9,25 +7,29 @@ class Game
         this.board.initialise(playerWhite, playerBlack)
     }
 
-    squareClicked(x, y)
-    {
+    squareClicked(x, y) {
         var moveMade = this.board.selectSquare(this.currentPlayer, x, y)
-        if (moveMade)
-        {
+        if (moveMade) {
+            this.addMoveToHistory(moveMade)
             this.finishTurn()
         }
     }
 
-    finishTurn()
-    {
+    addMoveToHistory(move) {
+        if (this.moveHistory == null) {
+            this.moveHistory = new Array()
+        }
+        this.moveHistory.push(move)
+    }
+
+    finishTurn() {
         //if pawn moved to end, offer option to change to queen/etc...
         this.board.deselectBoard()
         this.board.setPlayersKingInCheck(this.currentPlayer, false)
         this.startNewTurn()
     }
 
-    startNewTurn()
-    {
+    startNewTurn() {
         this.changePlayer()
 
         const kingInCheck = this.getIsCurrentPlayersKingInCheck()
@@ -35,29 +37,24 @@ class Game
 
         this.board.setPlayersKingInCheck(this.currentPlayer, kingInCheck)
 
-        if (noValidMoves)
-        {
+        if (noValidMoves) {
             //game over
-            if (kingInCheck)
-            {
+            if (kingInCheck) {
                 this.winner = this.getOpponent(this.currentPlayer)
             }
             this.endGame()
         }
     }
 
-    endGame()
-    {
+    endGame() {
         this.currentPlayer = null
     }
 
-    changePlayer()
-    {
+    changePlayer() {
         this.currentPlayer = this.getOpponent(this.currentPlayer)
     }
 
-    getOpponent(player)
-    {
+    getOpponent(player) {
         if (player == this.playerBlack) {
             return this.playerWhite
         }
@@ -66,13 +63,11 @@ class Game
         }
     }
 
-    getIsCurrentPlayersKingInCheck()
-    {
+    getIsCurrentPlayersKingInCheck() {
         return this.board.getIsPlayersKingInCheck(this.currentPlayer)
     }
 
-    doesCurrentPlayerHaveNoValidMoves()
-    {
+    doesCurrentPlayerHaveNoValidMoves() {
         return !this.board.doesPlayerHaveAValidMove(this.currentPlayer)
     }
 }

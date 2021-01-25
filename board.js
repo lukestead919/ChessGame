@@ -93,8 +93,7 @@ class Board {
 
             //if have a selected square, and clicked a valid move, then move
             if (clickedSquare.validMove) {
-                this.movePiece(this.selectedPiece, clickedSquare)
-                return true
+                return this.movePiece(this.selectedPiece, clickedSquare)
             }
 
             //Otherwise, selected a non valid move
@@ -104,8 +103,10 @@ class Board {
     }
 
     movePiece(piece, squareToMoveTo) {
-        piece.getSquare(this).piece = null
+        const currentSquare = piece.getSquare(this)
+        currentSquare.piece = null
         squareToMoveTo.piece = piece
+        return new Move(piece, currentSquare.getPosition(this), squareToMoveTo.getPosition(this))
     }
 
     // validMove(squareToMoveFrom, squareToMoveTo) {
@@ -160,10 +161,9 @@ class Board {
 
     doesPlayerHaveAValidMove(player) {
         var playersPieces = this.getAllPiecesForPlayer(player)
-        for (var i=0; i<playersPieces.length; i++) {
+        for (var i = 0; i < playersPieces.length; i++) {
             var piece = playersPieces[i]
-            if (piece.getValidMoves(this).length > 0)
-            {
+            if (piece.getValidMoves(this).length > 0) {
                 return true
             }
         }
