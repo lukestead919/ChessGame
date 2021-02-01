@@ -68,22 +68,20 @@ class Display {
 
                 var piece = square.piece
                 if (piece != null) {
-                    if (piece.player.colour == Player.COLOUR_WHITE) {
-                        td.classList.add("WhitePiece")
-                    }
-                    else {
-                        td.classList.add("BlackPiece")
-                    }
-                    //td.setAttribute("img", piece.getImage())
-                    td.innerHTML = piece.getName() + piece.colour
+                    const iconName = `${piece.player.colourName}${piece.getName()}`
+                    const iconPath = `Sprites/${iconName}.png`
+
+                    var img = new Image()
+                    img.src = iconPath
+                    img.alt = iconName
+                    td.appendChild(img)
                 }
             }
         }
     }
 
     refreshForMoveHistory(moveHistory) {
-        if (moveHistory == null)
-        {
+        if (moveHistory == null) {
             return
         }
         const moveHistoryTableOld = document.getElementById("MoveHistory")

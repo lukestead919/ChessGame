@@ -74,10 +74,6 @@ class Piece {
         throw new Error("getName is not implemented for " + this.constructor.name)
     }
 
-    getImage() {
-        throw new Error("getImage is not implemented for " + this.constructor.name)
-    }
-
     get colour() {
         return this.player.colour
     }

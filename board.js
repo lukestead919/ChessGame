@@ -21,16 +21,13 @@ class Board {
             var row = this.squaresBoard[x]
             for (var y = 0; y < row.length; y++) {
                 const piece = this.getPieceAtPosition(x, y)
-                if (piece != null) {
-                    map.set([x, y], piece)
-                }
+                map.set([x, y], piece)
             }
         }
         return map
     }
 
     setFromBoardState(map) {
-        this.getAllSquares().forEach(square => square.piece = null)
         for (const [position, piece] of map.entries()) {
             this.getSquareAtPosition(position[0], position[1]).piece = piece
         }
