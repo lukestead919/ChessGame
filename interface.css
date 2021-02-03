@@ -21,7 +21,7 @@ html, body {
     overflow: hidden;
 }
 
-td
+#BoardDisplay td
 {
     width: 60px;
     height: 60px;
@@ -79,6 +79,16 @@ img {
     position: absolute;
     top: 30%;
     padding-left: 1em;
+}
+
+#MainDisplay{
+    padding-left: 50px;
+}
+
+#MoveHistory td{
+    height: auto;
+    width: auto;
+    padding: 10px;
 }
 
 div{

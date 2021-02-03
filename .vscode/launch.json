@@ -11,5 +11,8 @@
             "url": "http://localhost:5500",
             "webRoot": "${workspaceFolder}"
         }
-    ]
+    ],
+    "env": {
+        "VSCODE_DEBUG_MODE": "true"
+    }
 }

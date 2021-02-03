@@ -240,4 +240,6 @@ class Board {
         }
         return square
     }
+
+    
 }

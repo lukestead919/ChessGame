@@ -18,14 +18,16 @@
         </div>
     </div>
 
-    <div id="Message" >
-        <p id="CurrentGameStateMessage" style="display: inline-block;"></p>
-        <button id="RematchButton" onclick="startNewGameSamePlayers()">Rematch</button>
-    </div>
+    <div id="MainDisplay">
+        <div id="InfoPanel">
+            <p id="CurrentGameStateMessage" style="display: inline-block;"></p>
+            <button id="RematchButton" onclick="startNewGameSamePlayers()">Rematch</button>
+        </div>
 
-    <div>
-        <table id="Board"></table>
-        <table id="MoveHistory"></table>
+        <div id="BoardDisplay">
+            <table id="Board"></table>
+            <table id="MoveHistory"></table>
+        </div>
     </div>
 
 

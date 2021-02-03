@@ -24,6 +24,7 @@ class Game {
 
     finishTurn() {
         //if pawn moved to end, offer option to change to queen/etc...
+        
         this.board.deselectBoard()
         this.board.setPlayersKingInCheck(this.currentPlayer, false)
         this.startNewTurn()
