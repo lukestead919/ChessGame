@@ -1,5 +1,4 @@
 var display = new Display();
-var controller = new Controller();
 
 var playerWhite = new Player("Luke", Player.COLOUR_WHITE)
 var playerBlack = new Player("Andreea", Player.COLOUR_BLACK)
@@ -8,10 +7,6 @@ var game = new Game(playerWhite, playerBlack);
 
 display.buildDisplay(game.board)
 refreshDisplay()
-
-
-
-
 
 
 var nightMode = false
@@ -27,14 +22,19 @@ function toggleNightMode() {
     }
 }
 
-function squareClicked(x, y)
-{
+function refreshDisplay() {
+    display.refreshForGame(game)
+}
+
+
+//controller functions (should probably move to new class)
+function squareClicked(x, y) {
     game.squareClicked(x, y)
     refreshDisplay()
 }
+function startNewGameSamePlayers() {
+    game = new Game(playerWhite, playerBlack);
 
-function refreshDisplay()
-{
-    display.refreshForBoard(game.board)
-    display.refreshForMoveHistory(game.moveHistory)
+    display.buildDisplay(game.board)
+    refreshDisplay()
 }

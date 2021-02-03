@@ -70,4 +70,12 @@ class Game {
     doesCurrentPlayerHaveNoValidMoves() {
         return !this.board.doesPlayerHaveAValidMove(this.currentPlayer)
     }
+
+    get currentGameStateMessage() {
+        if (this.winner != null) {
+            return `${this.winner.name} has won!`
+        }
+
+        return `${this.currentPlayer.name}'s turn`
+    }
 }

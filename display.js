@@ -3,16 +3,20 @@ class Display {
 
     }
 
+    refreshForGame(game) {
+        this.refreshForWinner(game.winner)
+        this.refreshForCurrentPlayer(game.currentPlayer)
+        this.refreshForBoard(game.board)
+        this.refreshForMoveHistory(game.moveHistory)
+    }
+
     buildDisplay(board) {
         //rebuild the table, don't copy the cells
-        var boardDisplay = document.getElementById("board")
+        var boardDisplay = document.getElementById("Board")
         var newBoardDisplay = boardDisplay.cloneNode(false);
         boardDisplay.parentNode.replaceChild(newBoardDisplay, boardDisplay);
 
         this.buildEmptyBoard(board, newBoardDisplay)
-
-
-        this.buildMoveHistoryTable()
     }
 
     buildEmptyBoard(board, boardDisplay) {
@@ -81,15 +85,16 @@ class Display {
     }
 
     refreshForMoveHistory(moveHistory) {
-        if (moveHistory == null) {
-            return
-        }
         const moveHistoryTableOld = document.getElementById("MoveHistory")
         var moveHistoryTable = moveHistoryTableOld.cloneNode(false);
         moveHistoryTableOld.parentNode.replaceChild(moveHistoryTable, moveHistoryTableOld);
         //This should be in order of the moves
         var moveNumber = 0
         var tr
+
+        if (moveHistory == null) {
+            return
+        }
 
         moveHistory.forEach(move => {
             if (move.piece.player.colour == Player.COLOUR_WHITE) {
@@ -107,10 +112,20 @@ class Display {
         });
     }
 
-    buildMoveHistoryTable() {
-        var table = document.createElement("table")
-        table.id = "MoveHistory"
-        document.body.appendChild(table)
+    refreshForCurrentPlayer(player) {
+        if (player != null) {
+            document.getElementById("CurrentGameStateMessage").innerHTML = `${player.name}'s turn`
+        }
+    }
+
+    refreshForWinner(winner) {
+        if (winner == null) {
+            document.getElementById("RematchButton").style.display = "none"
+        }
+        else {
+            document.getElementById("CurrentGameStateMessage").innerHTML = `${winner.name} has won`
+            document.getElementById("RematchButton").style.display = "inline-block"
+        }
     }
 
     getIdForPosition(x, y) {

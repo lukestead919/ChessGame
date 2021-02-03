@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html id="html">
+
 <head>
     <link rel="stylesheet" type="text/css" href="interface.css" />
     <script type="text/javascript" src="jsLoader.js"></script>
@@ -7,23 +8,24 @@
         Play Chess!
     </title>
 </head>
+
 <body id='body'>
 
 
     <div id="banner">
         <div id='bannerText'>
-                <a onclick="toggleNightMode()">Toggle Night Mode</a>
+            <a onclick="toggleNightMode()">Toggle Night Mode</a>
         </div>
     </div>
 
+    <div id="Message" >
+        <p id="CurrentGameStateMessage" style="display: inline-block;"></p>
+        <button id="RematchButton" onclick="startNewGameSamePlayers()">Rematch</button>
+    </div>
 
-
-    <!-- Chess board -->
-    <table id="board">
-
-    </table>
-    <!-- Chess board end -->
-
+    <div>
+        <table id="Board"></table>
+        <table id="MoveHistory"></table>
     </div>
 
 

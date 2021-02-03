@@ -1,5 +1,4 @@
-function loadScript(url)
-{
+function loadScript(url) {
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     script.type = 'text/javascript';
@@ -8,7 +7,6 @@ function loadScript(url)
 }
 loadScript("boardSquare.js")
 loadScript("board.js")
-loadScript("controller.js")
 loadScript("display.js")
 loadScript("game.js")
 loadScript("move.js")

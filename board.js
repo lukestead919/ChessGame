@@ -197,13 +197,7 @@ class Board {
     }
 
     getAllPiecesForPlayer(player) {
-        var pieces = new Array()
-        this.getAllPieces().forEach(piece => {
-            if (piece.player == player) {
-                pieces.push(piece)
-            }
-        });
-        return pieces
+        return this.getAllPieces().filter(piece => piece.player == player)
     }
 
     getAllPiecesForEnemyPlayers(player) {
