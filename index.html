@@ -18,7 +18,15 @@
         </div>
     </div>
 
-    <div id="MainDisplay">
+    <Form id="GameSetup" onsubmit="startGame(); return false;">
+        <label for="WhiteName">White Player:</label>
+        <input type="text" id="WhiteName" name="White Name" required><br>
+        <label for="BlackName">Black Player:</label>
+        <input type="text" id="BlackName" name="Black Name" required><br>
+        <input type="submit" id="StartGame" name="Start Game">
+    </Form>
+
+    <div id="MainDisplay" style="display: none;">
         <div id="InfoPanel">
             <p id="CurrentGameStateMessage" style="display: inline-block;"></p>
             <button id="RematchButton" onclick="startNewGameSamePlayers()">Rematch</button>

@@ -1,14 +1,3 @@
-var display = new Display();
-
-var playerWhite = new Player("Luke", Player.COLOUR_WHITE)
-var playerBlack = new Player("Andreea", Player.COLOUR_BLACK)
-
-var game = new Game(playerWhite, playerBlack);
-
-display.buildDisplay(game.board)
-refreshDisplay()
-
-
 var nightMode = false
 function toggleNightMode() {
     var A = document.documentElement
@@ -28,6 +17,24 @@ function refreshDisplay() {
 
 
 //controller functions (should probably move to new class)
+function startGame() {
+    const form = document.forms["GameSetup"]
+    const whiteName = document.getElementById("WhiteName").value
+    const BlackName = document.getElementById("BlackName").value
+
+    var playerWhite = new Player(whiteName, Player.COLOUR_WHITE)
+    var playerBlack = new Player(BlackName, Player.COLOUR_BLACK)
+
+    game = new Game(playerWhite, playerBlack);
+
+    display = new Display();
+    display.buildDisplay(game.board)
+    refreshDisplay()
+
+    form.style.display = "none"
+    document.getElementById("MainDisplay").style.display = "block"
+}
+
 function squareClicked(x, y) {
     if (this.game.board.getPawnReadyToUpgrade() != null) //make this a more generic method
     {
@@ -38,7 +45,7 @@ function squareClicked(x, y) {
 }
 
 function startNewGameSamePlayers() {
-    game = new Game(playerWhite, playerBlack);
+    game = new Game(game.playerWhite, game.playerBlack);
 
     display.buildDisplay(game.board)
     refreshDisplay()

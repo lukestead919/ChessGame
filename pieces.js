@@ -26,7 +26,8 @@ class Piece {
     getValidMoves(board) {
 
         //for debugging
-        return board.getAllSquares()
+        if (this.colour == Player.COLOUR_WHITE)
+            return board.getAllSquares()
 
         //save the current positions
         var originalBoardState = board.getCurrentBoardState()
