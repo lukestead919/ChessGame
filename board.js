@@ -241,5 +241,17 @@ class Board {
         return square
     }
 
-    
+    getPawnReadyToUpgrade() {
+        for (var i = 0; i < this.squaresBoard.length; i++) {
+            var piece = this.getPieceAtPosition(i, 0)
+            if (piece instanceof Pawn) {
+                return piece
+            }
+
+            piece = this.getPieceAtPosition(i, this.squaresBoard.length - 1)
+            if (piece instanceof Pawn) {
+                return piece
+            }
+        }
+    }
 }

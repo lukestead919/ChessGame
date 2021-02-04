@@ -23,9 +23,11 @@ class Game {
     }
 
     finishTurn() {
-        //if pawn moved to end, offer option to change to queen/etc...
-        
         this.board.deselectBoard()
+        if (this.board.getPawnReadyToUpgrade() != null) {
+            //wait for the upgrade
+            return
+        }
         this.board.setPlayersKingInCheck(this.currentPlayer, false)
         this.startNewTurn()
     }
@@ -78,5 +80,28 @@ class Game {
         }
 
         return `${this.currentPlayer.name}'s turn`
+    }
+
+    upgradePawnTo(pieceName) {
+        const pawn = this.board.getPawnReadyToUpgrade()
+        const position = pawn.getPosition(this.board)
+        const player = pawn.player
+        const x = position[0]
+        const y = position[1]
+        switch (pieceName) {
+            case "Queen":
+                new Queen(game.board, player, x, y)
+                break
+            case "Rook":
+                new Rook(game.board, player, x, y)
+                break
+            case "Knight":
+                new Knight(game.board, player, x, y)
+                break
+            case "Bishop":
+                new Bishop(game.board, player, x, y)
+                break
+        }
+        this.finishTurn()
     }
 }

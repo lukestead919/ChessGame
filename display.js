@@ -8,6 +8,7 @@ class Display {
         this.refreshForCurrentPlayer(game.currentPlayer)
         this.refreshForBoard(game.board)
         this.refreshForMoveHistory(game.moveHistory)
+        this.showPawnUpgradePanel(game)
     }
 
     buildDisplay(board) {
@@ -134,5 +135,36 @@ class Display {
 
     getCellForPosition(x, y) {
         return document.getElementById(this.getIdForPosition(x, y))
+    }
+
+    showPawnUpgradePanel(game) {
+        const pawn = game.board.getPawnReadyToUpgrade()
+        if (pawn == null) {
+            return
+        }
+        const position = pawn.getPosition(game.board)
+        const cell = this.getCellForPosition(position[0], position[1])
+
+        const container = document.createElement("div")
+        cell.appendChild(container)
+
+        container.classList.add("PawnUpgradePanel")
+        container.classList.add(pawn.player.colourName)
+        this.createPawnUpgradeFunction(container, pawn, "Queen")
+        this.createPawnUpgradeFunction(container, pawn, "Rook")
+        this.createPawnUpgradeFunction(container, pawn, "Knight")
+        this.createPawnUpgradeFunction(container, pawn, "Bishop")
+    }
+
+    createPawnUpgradeFunction(container, pawn, upgradeToName) {
+        const iconName = `${pawn.player.colourName}${upgradeToName}`
+        const iconPath = `Sprites/${iconName}.png`
+
+        var img = new Image()
+        img.classList.add("UpgradePieceImage")
+        img.src = iconPath
+        img.alt = iconName
+        img.onclick = function () { upgradePawnTo(upgradeToName) }
+        container.appendChild(img)
     }
 }

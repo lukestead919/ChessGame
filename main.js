@@ -29,12 +29,21 @@ function refreshDisplay() {
 
 //controller functions (should probably move to new class)
 function squareClicked(x, y) {
+    if (this.game.board.getPawnReadyToUpgrade() != null) //make this a more generic method
+    {
+        return;
+    }
     game.squareClicked(x, y)
     refreshDisplay()
 }
+
 function startNewGameSamePlayers() {
     game = new Game(playerWhite, playerBlack);
 
     display.buildDisplay(game.board)
     refreshDisplay()
+}
+
+function upgradePawnTo(pieceName) {
+    game.upgradePawnTo(pieceName)
 }
